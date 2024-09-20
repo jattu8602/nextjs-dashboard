@@ -1,4 +1,5 @@
 import { sql } from '@vercel/postgres';
+
 import {
   CustomerField,
   CustomersTableType,
@@ -37,11 +38,14 @@ export async function fetchLatestInvoices() {
       ORDER BY invoices.date DESC
       LIMIT 5`;
 
+
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
       amount: formatCurrency(invoice.amount),
-    }));
-    return latestInvoices;
+    }))
+    //console.log(latestInvoices) // Add this line to inspect the fetched data
+    return latestInvoices
+
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch the latest invoices.');
